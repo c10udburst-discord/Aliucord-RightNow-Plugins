@@ -14,6 +14,12 @@ jobs:
           repository: Aliucord/rollup-plugin-aliucord
           path: rollup-plugin-aliucord
 
+      - name: Checkout builds
+        uses: actions/checkout@master
+        with:
+          ref: "builds"
+          path: "builds"
+
       - uses: actions/setup-node@v2
         with:
           registry-url: 'https://registry.npmjs.org'
@@ -37,7 +43,7 @@ jobs:
 
       - name: Copy plugins
         run: |
-          cp -r dist/* $GITHUB_WORKSPACE/builds
+          cp dist/* $GITHUB_WORKSPACE/builds
       
       - name: Push builds
         run: |
