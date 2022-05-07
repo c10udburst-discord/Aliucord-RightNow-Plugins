@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",
+      "jsx": "react-native",
+      "strict": true,
+      "noImplicitAny": false,
+      "moduleResolution": "node",
+      "module": "ESNext"
+    }
+  }
+  

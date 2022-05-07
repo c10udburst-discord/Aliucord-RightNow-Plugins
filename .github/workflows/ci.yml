@@ -1,0 +1,36 @@
+name: CI
+
+on: push
+
+jobs:
+  build:
+    name: Build plugins
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+        with:
+          repository: Aliucord/rollup-plugin-aliucord
+          path: rollup-plugin-aliucord
+
+      - uses: actions/setup-node@v2
+        with:
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: Prepare rollup plugin
+        working-directory: ./rollup-plugin-aliucord
+        run: |
+          pnpm i
+          pnpm run build
+
+      - name: Setup dependencies
+        run: |
+          pnpm i ./rollup-plugin-aliucord
+
+      - name: Build plugins
+        run: |
+          mkdir dist
+          find ./ -path "*/manifest.json" | xargs -I % bash -c "base='%'; node build.mjs \${base:2:-14};"
