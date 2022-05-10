@@ -9,10 +9,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/checkout@v2
-        with:
-          repository: Aliucord/rollup-plugin-aliucord
-          path: rollup-plugin-aliucord
 
       - name: Checkout builds
         uses: actions/checkout@master
@@ -25,16 +21,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Install pnpm
         run: npm i -g pnpm
-
-      - name: Prepare rollup plugin
-        working-directory: ./rollup-plugin-aliucord
-        run: |
-          pnpm i
-          pnpm run build
-
-      - name: Setup dependencies
-        run: |
-          pnpm i ./rollup-plugin-aliucord
 
       - name: Build plugins
         run: |
