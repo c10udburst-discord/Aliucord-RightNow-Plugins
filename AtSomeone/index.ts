@@ -7,7 +7,7 @@ export default class AtSomeone extends Plugin {
         const { getChannel } = getByProps("getChannel");
         const { getMemberIds } = getByProps("getMemberIds");
 
-        before(MessageActions, "sendMessage", (_, [message, channelId]) => {
+        before(MessageActions, "sendMessage", (_, message, channelId) => {
             if (message.content.includes("@someone")) {
                 const channel = getChannel(channelId)
                 const members = getMemberIds(channel.guildId)
