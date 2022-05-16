@@ -13,12 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Checkout builds
-        uses: actions/checkout@master
-        with:
-          ref: "builds"
-          path: "builds"
-
       - uses: actions/setup-node@v2
         with:
           registry-url: 'https://registry.npmjs.org'
@@ -39,10 +33,18 @@ jobs:
         with:
           name: dist
           path: dist/*
+          
+      - name: Checkout builds
+        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)  # Only runs if this CI was triggered by the default branch
+        uses: actions/checkout@master
+        with:
+          ref: "builds"
+          path: "builds"
       
       - name: Push builds
         if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)  # Only runs if this CI was triggered by the default branch
         run: |
+          rm $GITHUB_WORKSPACE/builds/*  # clean previous builds
           cp dist/* $GITHUB_WORKSPACE/builds
           cd $GITHUB_WORKSPACE/builds
           git config --local user.email "actions@github.com"
@@ -50,4 +52,3 @@ jobs:
           git add .
           git commit -m "Build $GITHUB_SHA" || exit 0   # do not error if nothing to commit
           git push
-
