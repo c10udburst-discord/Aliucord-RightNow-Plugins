@@ -13,7 +13,7 @@ jobs:
 
       - name: Run script
         run: |
-          python3 .github/readme.py
+          python3 .github/fix-readme.py
 
       - name: Push
         run: |

@@ -6,7 +6,7 @@ from json import load
 from os.path import split
 
 with open("README.md", "w+", encoding="utf-8") as fp:
-    fp.write("# Aliucord RN plugins")
+    fp.write("# Aliucord RN plugins\n\n")
     for path in glob("*/manifest.json"):
         plugin, _ = split(path)
         manifest = load(open(path))
