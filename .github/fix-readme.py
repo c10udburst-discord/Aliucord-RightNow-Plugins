@@ -10,4 +10,4 @@ with open("README.md", "w+", encoding="utf-8") as fp:
     for path in glob("*/manifest.json"):
         plugin, _ = split(path)
         manifest = load(open(path))
-        fp.write(f"- [{plugin}](https://github.com/c10udburst-discord/Aliucord-RightNow-Plugins/blob/builds/{plugin}.js.bundle): {manifest['description']}\n")
+        fp.write(f"- [{plugin}](https://github.com/c10udburst-discord/Aliucord-RightNow-Plugins/blob/builds/{plugin}.js.bundle?raw=true): {manifest['description']}\n")
