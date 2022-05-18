@@ -20,7 +20,12 @@ if (plugin === "--watch") {
 
 check(!!plugin, `Usage: ${argv.join(" ")} <PLUGIN>`);
 
-const path = join(plugin, "index.ts");
+let path = null
+if (existsSync(join(plugin, "index.ts"))) {
+    path = join(plugin, "index.ts")
+} else if (existsSync(join(plugin, "index.tsx"))) {
+    path = join(plugin, "index.tsx")
+}
 check(existsSync(path), `No such file: ${path}`);
 
 console.log(`Building: ${plugin}`)
@@ -29,7 +34,8 @@ const proc = spawnSync((platform === "win32") ? ".\\node_modules\\.bin\\rollup.c
     stdio: "inherit",
     cwd: cwd(),
     env: {
-        plugin
+        plugin,
+        pluginPath: path
     }
 });
 
