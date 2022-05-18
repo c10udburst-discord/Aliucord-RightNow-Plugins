@@ -1,0 +1,24 @@
+name: README
+
+on:
+  push:
+
+jobs:
+  build:
+    name: Fix Readme
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+    - name: Run script
+      run: |
+        python3 .github/readme.py
+
+    - name: Push
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add .
+          git commit -m "chore(docs): Update README.md" || exit 0   # do not error if nothing to commit
+          git push
