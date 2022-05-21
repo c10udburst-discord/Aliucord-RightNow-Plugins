@@ -44,7 +44,7 @@ jobs:
       - name: Push builds
         if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)  # Only runs if this CI was triggered by the default branch
         run: |
-          rm $GITHUB_WORKSPACE/builds/*  # clean previous builds
+          rm $GITHUB_WORKSPACE/builds/* || true # clean previous builds
           cp dist/* $GITHUB_WORKSPACE/builds
           cd $GITHUB_WORKSPACE/builds
           git config --local user.email "actions@github.com"
