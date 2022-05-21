@@ -4,7 +4,8 @@ import {
     Constants,
     ChannelStore,
     ReactNative as RN,
-    FluxDispatcher
+    FluxDispatcher,
+    Dialog
 } from 'aliucord/metro';
 import { before, callOriginal } from "aliucord/utils/patcher";
 
@@ -12,13 +13,12 @@ export default class HiddenChannels extends Plugin {
     public async start() {
         const permissions = getByProps("getChannelPermissions", "can");
 
-        function isHidden(channel: string | Object | undefined) {
+        function isHidden(channel: any | undefined) {
             if (channel == undefined) return false;
-            if (typeof channel === 'string') {
-                return !callOriginal(permissions.can, permissions, Constants.Permissions.VIEW_CHANNEL, ChannelStore.getChannel(channel))
-            } else {
-                return !callOriginal(permissions.can, permissions, Constants.Permissions.VIEW_CHANNEL, channel)
-            }
+            if (typeof channel === 'string')
+                channel = ChannelStore.getChannel(channel)
+            if (channel?.type === 1) return false;
+            return !callOriginal(permissions.can, permissions, Constants.Permissions.VIEW_CHANNEL, channel)
         }
 
         before(permissions, "can", ctx => {
@@ -62,10 +62,11 @@ export default class HiddenChannels extends Plugin {
                     channelId
                 })
                 const channel = ChannelStore.getChannel(channelId)
-                RN.Alert.alert(
-                    channel.name,
-                    `${channel.topic}`
-                )
+                Dialog.show({
+                    title: channel.name,
+                    body: channel.topic,
+                    isDismissable: true
+                })
                 ctx.result = null;
             }
         })

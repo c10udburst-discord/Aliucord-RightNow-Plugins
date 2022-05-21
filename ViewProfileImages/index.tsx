@@ -1,11 +1,11 @@
 import { Plugin } from "aliucord/entities";
-import { getModule, React, URLOpener } from "aliucord/metro";
+import { getByName, getModule, React, URLOpener } from "aliucord/metro";
 import { after } from "aliucord/utils/patcher";
 import { Pressable } from "react-native";
 
 export default class ViewProfileImages extends Plugin {
     public async start() {
-        const HeaderAvatar = getModule(m => m.default?.name === "HeaderAvatar");
+        const HeaderAvatar = getByName("HeaderAvatar");
         
         after(HeaderAvatar, "default", (ctx, component) => {
             const uri = component?.props?.source?.uri;
