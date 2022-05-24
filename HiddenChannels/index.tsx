@@ -4,10 +4,13 @@ import {
     Constants,
     ChannelStore,
     ReactNative as RN,
-    FluxDispatcher,
-    Dialog
+    React,
+    getByName,
+    Styles
 } from 'aliucord/metro';
-import { before, callOriginal } from "aliucord/utils/patcher";
+import { after, before, callOriginal } from "aliucord/utils/patcher";
+import { SnowflakeUtil } from "./snowflake-util.js"
+import { Text } from "react-native";
 
 export default class HiddenChannels extends Plugin {
     public async start() {
@@ -56,19 +59,8 @@ export default class HiddenChannels extends Plugin {
         const navigator = getByProps("selectChannel")
         before(navigator, "selectChannel", ctx => {
             const [_, channelId] = ctx.args
-            if (isHidden(channelId)) {
-                FluxDispatcher.dispatch({
-                    type: Constants.ActionTypes.LOAD_MESSAGES_FAILURE,
-                    channelId
-                })
-                const channel = ChannelStore.getChannel(channelId)
-                Dialog.show({
-                    title: channel.name,
-                    body: channel.topic,
-                    isDismissable: true
-                })
+            if (isHidden(channelId))
                 ctx.result = null;
-            }
         })
 
         const Router = getByProps("transitionToGuild")
@@ -76,6 +68,42 @@ export default class HiddenChannels extends Plugin {
             const [_, channel] = ctx.args
             if (isHidden(channel))
                 ctx.result = null;
+        })
+
+        const MessagesConnected = getByName("MessagesConnected")
+        const snowflake = new SnowflakeUtil();
+        const MessageStyles = Styles.createThemedStyleSheet({
+            'title': {
+                'fontFamily': "ABCGintoNormalVariable_Bold",
+                'fontSize': 17,
+                'backgroundColor': "#2f3136",
+                'textAlign': 'left',
+                'color': "#ffffff",
+                'padding': 20,
+                'flex': 1
+            },
+            'text': {
+                'fontFamily': "Whitney-Medium",
+                'fontSize': 14,
+                'backgroundColor': "#2f3136",
+                'textAlign': 'center',
+                'color': "#ffffff",
+                'padding': 20,
+                'flex': 1
+            }
+        })
+        after(MessagesConnected, "default", (ctx, res) => {
+            const channel = res.props.channel;
+            if (!isHidden(channel)) return;
+
+            ctx.result = <Text style={MessageStyles.text}>
+                <Text style={MessageStyles.title}>Hidden Channel</Text>
+                <Text>{"\n\n" + channel.topic}</Text>
+                <Text>{"\n\nLast Message: "}</Text>
+                <Text>{channel.lastMessageId ? snowflake.deconstruct(channel.lastMessageId).date.toLocaleString() : "-"}</Text>
+                <Text>{"\n\nLast Pin: "}</Text>
+                <Text>{channel.lastPinTimestamp ? snowflake.deconstruct(channel.lastPinTimestamp).date.toLocaleString() : "-"}</Text>
+            </Text>
         })
     }
 }
