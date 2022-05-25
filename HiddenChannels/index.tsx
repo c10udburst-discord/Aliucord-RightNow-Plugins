@@ -102,7 +102,7 @@ export default class HiddenChannels extends Plugin {
                 <Text>{"\n\nLast Message: "}</Text>
                 <Text>{channel.lastMessageId ? snowflake.deconstruct(channel.lastMessageId).date.toLocaleString() : "-"}</Text>
                 <Text>{"\n\nLast Pin: "}</Text>
-                <Text>{channel.lastPinTimestamp ? snowflake.deconstruct(channel.lastPinTimestamp).date.toLocaleString() : "-"}</Text>
+                <Text>{channel.lastPinTimestamp ? (new Date(channel.lastPinTimestamp)).toLocaleString() : "-"}</Text>
             </Text>
         })
     }
