@@ -6,4 +6,5 @@
 - [MetroTools](https://github.com/c10udburst-discord/Aliucord-RightNow-Plugins/blob/builds/MetroTools.js.bundle?raw=true): Useful for devs. Find modules using /commands
 - [SilentTyping](https://github.com/c10udburst-discord/Aliucord-RightNow-Plugins/blob/builds/SilentTyping.js.bundle?raw=true): Makes Discord not send your typing indicator
 - [Token](https://github.com/c10udburst-discord/Aliucord-RightNow-Plugins/blob/builds/Token.js.bundle?raw=true): Get your token via the /token command
+- [UserDetails](https://github.com/c10udburst-discord/Aliucord-RightNow-Plugins/blob/builds/UserDetails.js.bundle?raw=true): Displays when user created account and joined to server.
 - [ViewProfileImages](https://github.com/c10udburst-discord/Aliucord-RightNow-Plugins/blob/builds/ViewProfileImages.js.bundle?raw=true): Allows you to open user or server avatars by tapping them, similar to attachments or embeds.
