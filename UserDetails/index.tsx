@@ -1,6 +1,6 @@
 import { Plugin } from "aliucord/entities";
 import { getByName, React, Styles, GuildMemberStore } from "aliucord/metro";
-import { after } from "aliucord/utils/patcher";
+import { after, before } from "aliucord/utils/patcher";
 
 import { Text } from "react-native";
 
@@ -19,7 +19,7 @@ export default class UserDetails extends Plugin {
                 "textTransform": "uppercase",
                 "letterSpacing": 0.2,
                 'marginLeft': 15,
-                "marginTop": 6,
+                "marginTop": 20,
                 "marginBottom": 6
             },
             'text': {
@@ -32,22 +32,17 @@ export default class UserDetails extends Plugin {
             }
         })
         
-        after(UserProfileBio, "default", (ctx, component) => {
-            const {user, guild} = component.props;
+        after(UserProfileBio, "default", (ctx, bio) => {
+            const {user, guild} = ctx.args[0]
 
-            if (!user) return;
+            if (typeof user == "undefined") return;
 
             const member = guild && GuildMemberStore.getMember(guild.id, user.id)
 
-            ctx.result = [
-                component,
-                <>
-                    <Text style={MessageStyles.title}>User details</Text>
-                    <Text style={MessageStyles.text}>{`Created: ${convertSnowflakeToDate(user.id).toLocaleString()}`}</Text>
-                    {member && 
-                        <Text style={MessageStyles.text}>{`Joined: ${(new Date(member.joinedAt)).toLocaleString()}`}</Text>
-                    }
-                </>
+            ctx.result = [bio,
+                <Text style={MessageStyles.title}>User details</Text>,
+                <Text style={MessageStyles.text}>{`Created: ${convertSnowflakeToDate(user.id).toLocaleString()}`}</Text>,
+                member && <Text style={MessageStyles.text}>{`Joined: ${(new Date(member.joinedAt)).toLocaleString()}`}</Text>
             ]
         })
     }

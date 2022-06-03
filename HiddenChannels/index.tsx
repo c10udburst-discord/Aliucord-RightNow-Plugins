@@ -8,7 +8,6 @@ import {
     Styles
 } from 'aliucord/metro';
 import { after, before, callOriginal } from "aliucord/utils/patcher";
-import { convertSnowflakeToDate } from "./snowflake-util.js"
 import { Text } from "react-native";
 
 export default class HiddenChannels extends Plugin {
