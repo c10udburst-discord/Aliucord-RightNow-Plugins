@@ -1,11 +1,13 @@
 import { Plugin } from "aliucord/entities";
-import { FluxDispatcher, MessageStore } from "aliucord/metro";
+import { FluxDispatcher, MessageStore, UserStore } from "aliucord/metro";
 import { before } from "aliucord/utils/patcher";
 
 export default class MessageLogger extends Plugin {
     public async start() {
         before(FluxDispatcher, "dispatch", (ctx, event) => {
             if (event.type === "MESSAGE_UPDATE" && event?.message?.content) {
+                if (UserStore.getCurrentUser().id === event?.message?.author?.id) return;
+
                 const original = MessageStore.getMessage(event.message.channel_id, event.message.id);
                 if (original?.content === undefined) return;
 
@@ -15,6 +17,7 @@ export default class MessageLogger extends Plugin {
             else if (event.type === "MESSAGE_DELETE") {
                 const original = MessageStore.getMessage(event.channelId, event.id);
                 if (original === undefined) return;
+                if (UserStore.getCurrentUser().id === original.author?.id) return;
 
                 event.type = "MESSAGE_UPDATE"
 
