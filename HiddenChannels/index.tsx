@@ -1,5 +1,6 @@
 import { Plugin } from "aliucord/entities";
 import {
+    SnowflakeUtils,
     getByProps,
     Constants,
     ChannelStore,
@@ -12,8 +13,6 @@ import { Text } from "react-native";
 
 export default class HiddenChannels extends Plugin {
     public async start() {
-        const convertSnowflakeToDate = (snowflake) => new Date(parseInt(snowflake)/4194304 + 1420070400000)
-
         const permissions = getByProps("getChannelPermissions", "can");
 
         function isHidden(channel: any | undefined) {
@@ -99,7 +98,7 @@ export default class HiddenChannels extends Plugin {
                 <Text style={MessageStyles.title}>Hidden Channel</Text>
                 <Text>{"\n\n" + channel.topic}</Text>
                 <Text>{"\n\nLast Message: "}</Text>
-                <Text>{channel.lastMessageId ? convertSnowflakeToDate(channel.lastMessageId).toLocaleString() : "-"}</Text>
+                <Text>{channel.lastMessageId ? new Date(SnowflakeUtils.extractTimestamp(channel.lastMessageId)).toLocaleString() : "-"}</Text>
                 <Text>{"\n\nLast Pin: "}</Text>
                 <Text>{channel.lastPinTimestamp ? (new Date(channel.lastPinTimestamp)).toLocaleString() : "-"}</Text>
             </Text>

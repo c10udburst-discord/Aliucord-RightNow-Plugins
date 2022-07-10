@@ -1,12 +1,17 @@
 import { Plugin } from "aliucord/entities";
-import { getByName, React, Styles, GuildMemberStore } from "aliucord/metro";
-import { after, before } from "aliucord/utils/patcher";
+import {
+    getByName,
+    SnowflakeUtils,
+    React,
+    Styles,
+    GuildMemberStore
+} from "aliucord/metro";
+import { after } from "aliucord/utils/patcher";
 
 import { Text } from "react-native";
 
 export default class UserDetails extends Plugin {
     public async start() {
-        const convertSnowflakeToDate = (snowflake) => new Date(parseInt(snowflake)/4194304 + 1420070400000)
 
         const UserProfileBio = getByName("UserProfileBio")
 
@@ -41,7 +46,7 @@ export default class UserDetails extends Plugin {
 
             ctx.result = [bio,
                 <Text style={MessageStyles.title}>User details</Text>,
-                <Text style={MessageStyles.text}>{`Created: ${convertSnowflakeToDate(user.id).toLocaleString()}`}</Text>,
+                <Text style={MessageStyles.text}>{`Created: ${new Date(SnowflakeUtils.extractTimestamp(user.id)).toLocaleString()}`}</Text>,
                 member && <Text style={MessageStyles.text}>{`Joined: ${(new Date(member.joinedAt)).toLocaleString()}`}</Text>
             ]
         })
