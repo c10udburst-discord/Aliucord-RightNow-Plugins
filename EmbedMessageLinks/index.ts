@@ -64,7 +64,6 @@ export default class EmbedMessageLinks extends Plugin {
                 event.messages = event?.messages?.map(msg => {
                     const msgEmbeds = makeEmbeds(event?.message)
                     if (!msgEmbeds) return msg;
-                    console.log(msgEmbeds)
                     msg.embeds = msg.embeds?.filter(it=>!it.id || !it.id.startsWith("eml_")) || []
                     msg.embeds.push(...msgEmbeds)
                     return msg
