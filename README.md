@@ -3,6 +3,7 @@
 - [AtSomeone](https://github.com/c10udburst-discord/Aliucord-RightNow-Plugins/blob/builds/AtSomeone.js.bundle?raw=true): @Someone randomly on the server
 - [CreateWebhooks](https://github.com/c10udburst-discord/Aliucord-RightNow-Plugins/blob/builds/CreateWebhooks.js.bundle?raw=true): Create webhooks from the webhook management screens
 - [EmbedMessageLinks](https://github.com/c10udburst-discord/Aliucord-RightNow-Plugins/blob/builds/EmbedMessageLinks.js.bundle?raw=true): [broken rn] Embeds message links.
+- [Experiments](https://github.com/c10udburst-discord/Aliucord-RightNow-Plugins/blob/builds/Experiments.js.bundle?raw=true): Discord developer mode
 - [HiddenChannels](https://github.com/c10udburst-discord/Aliucord-RightNow-Plugins/blob/builds/HiddenChannels.js.bundle?raw=true): View the name and description of channels you can't access
 - [MessageLogger](https://github.com/c10udburst-discord/Aliucord-RightNow-Plugins/blob/builds/MessageLogger.js.bundle?raw=true): [broken rn] Temporarily logs edits and deletes locally. for moderation purposes of course.
 - [MetroTools](https://github.com/c10udburst-discord/Aliucord-RightNow-Plugins/blob/builds/MetroTools.js.bundle?raw=true): Useful for devs. Find modules using /commands
