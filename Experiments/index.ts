@@ -7,7 +7,7 @@ export default class Experiments extends Plugin {
     
     before(UserStore, 'getCurrentUser', ctx => {
       const User = getByProps('isDeveloper');
-      const STAFF = al.metro.getByProps("UserFlags").STAFF;
+      const STAFF = getByProps("UserFlags").STAFF;
       const Nodes = Object.values(User._dispatcher._actionHandlers._dependencyGraph.nodes);
 
       AliuHermes.unfreeze(User)
