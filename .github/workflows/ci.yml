@@ -25,27 +25,28 @@ jobs:
       - name: Build plugins
         run: |
           mkdir dist
-          find ./ -path "*/manifest.json" | xargs -I % bash -c "base='%'; node build.mjs \${base:2:-14};"
-
+          for plugin in $(find . -type f -name manifest.json -exec dirname {} \; | cut -c3-); do
+            node build.mjs "$plugin"
+          done
       - name: Upload dist folder as artifact
         uses: actions/upload-artifact@v3
         if: github.ref != format('refs/heads/{0}', github.event.repository.default_branch) # Only runs if this CI was not triggered by the default branch
         with:
           name: dist
-          path: dist/*
-          
+          path: dist/*.{zip,json}
+
       - name: Checkout builds
-        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)  # Only runs if this CI was triggered by the default branch
+        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch) # Only runs if this CI was triggered by the default branch
         uses: actions/checkout@master
         with:
-          ref: "builds"
-          path: "builds"
-      
+          ref: 'builds'
+          path: 'builds'
+
       - name: Push builds
-        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)  # Only runs if this CI was triggered by the default branch
+        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch) # Only runs if this CI was triggered by the default branch
         run: |
           rm $GITHUB_WORKSPACE/builds/* || true # clean previous builds
-          cp dist/* $GITHUB_WORKSPACE/builds
+          cp dist/*.{zip,json} $GITHUB_WORKSPACE/builds
           cd $GITHUB_WORKSPACE/builds
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"

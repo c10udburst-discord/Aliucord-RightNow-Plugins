@@ -13,7 +13,7 @@
     "@types/react": "^18.0.8",
     "@types/react-native": "^0.67.6",
     "aliucord": "^0.1.0",
-    "@aliucord/rollup-plugin": "0.1.0",
+    "@aliucord/rollup-plugin": "^1.0.2",
     "hermes-engine": "0.11.0",
     "rollup": "^2.71.1",
     "tslib": "^2.4.0",
