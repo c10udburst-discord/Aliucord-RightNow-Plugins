@@ -19,7 +19,8 @@ export default class HiddenChannels extends Plugin {
             if (channel == undefined) return false;
             if (typeof channel === 'string')
                 channel = ChannelStore.getChannel(channel)
-            if (channel?.type === 1) return false;
+            // https://discord.com/developers/docs/resources/channel#channel-object-channel-types too lazy to find that in constants
+            if (channel?.type === 1 || channel?.type === 3) return false;
             return !callOriginal(permissions.can, permissions, Constants.Permissions.VIEW_CHANNEL, channel)
         }
 
