@@ -65,6 +65,12 @@ export default class HiddenChannels extends Plugin {
 
         const MessagesConnected = getByName("MessagesConnected")
         const MessageStyles = Styles.createThemedStyleSheet({
+            'container': {
+                'flex': 1,
+                'alignItems': 'center',
+                'justifyContent': 'center',
+                'backgroundColor': Constants.ThemeColorMap.BACKGROUND_PRIMARY,
+             },
             'title': {
                 'fontFamily': Constants.Fonts.PRIMARY_SEMIBOLD,
                 'fontSize': 17,
@@ -88,14 +94,14 @@ export default class HiddenChannels extends Plugin {
             const channel = res.props.channel;
             if (!isHidden(channel)) return;
 
-            ctx.result = <Text style={MessageStyles.text}>
+            ctx.result = <View style={MessageStyles.container}>
                 <Text style={MessageStyles.title}>Hidden Channel</Text>
                 <Text>{"\n\n" + channel.topic}</Text>
                 <Text>{"\n\nLast Message: "}</Text>
                 <Text>{channel.lastMessageId ? new Date(SnowflakeUtils.extractTimestamp(channel.lastMessageId)).toLocaleString() : "-"}</Text>
                 <Text>{"\n\nLast Pin: "}</Text>
                 <Text>{channel.lastPinTimestamp ? (new Date(channel.lastPinTimestamp)).toLocaleString() : "-"}</Text>
-            </Text>
+            </View>
         })
     }
 }
