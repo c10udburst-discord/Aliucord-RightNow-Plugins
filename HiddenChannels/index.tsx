@@ -49,13 +49,6 @@ export default class HiddenChannels extends Plugin {
                 ctx.result = 0;
         })
 
-        const messageFetch = getByProps("fetchMessages")
-        before(messageFetch, "fetchMessages", ctx => {
-            const [_, channel] = ctx.args
-            if (isHidden(channel))
-                ctx.result = null;
-        })
-
         const navigator = getByProps("selectChannel")
         before(navigator, "selectChannel", ctx => {
             const [_, channelId] = ctx.args
@@ -73,18 +66,18 @@ export default class HiddenChannels extends Plugin {
         const MessagesConnected = getByName("MessagesConnected")
         const MessageStyles = Styles.createThemedStyleSheet({
             'title': {
-                'fontFamily': "ABCGintoNormalVariable_Bold",
+                'fontFamily': Constants.Fonts.PRIMARY_SEMIBOLD,
                 'fontSize': 17,
-                'backgroundColor': "#2f3136",
+                'backgroundColor':Constants.ThemeColorMap.BACKGROUND_PRIMARY,
                 'textAlign': 'left',
-                'color': "#ffffff",
+                'color': Constants.ThemeColorMap.HEADER_PRIMARY,
                 'padding': 20,
                 'flex': 1
             },
             'text': {
-                'fontFamily': "Whitney-Medium",
+                'fontFamily': Constants.ThemeColorMap.HEADER_SECONDARY,
                 'fontSize': 14,
-                'backgroundColor': "#2f3136",
+                'backgroundColor':Constants.ThemeColorMap.BACKGROUND_PRIMARY,
                 'textAlign': 'center',
                 'color': "#ffffff",
                 'padding': 20,
