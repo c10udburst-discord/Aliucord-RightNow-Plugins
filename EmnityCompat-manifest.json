@@ -1,0 +1,1 @@
+{"authors":[{"id":"892128204150685769","name":"cloudburst"}],"license":"GPL3","version":"1.0.0","description":"Injects emnity into aliucordrn, but plugins and themes don't work, since they are handled on the native side.","name":"EmnityCompat"}
