@@ -9,7 +9,7 @@ import {
     Styles
 } from 'aliucord/metro';
 import { after, before, callOriginal } from "aliucord/utils/patcher";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 export default class HiddenChannels extends Plugin {
     public async start() {
@@ -48,6 +48,11 @@ export default class HiddenChannels extends Plugin {
             if (isHidden(channel))
                 ctx.result = 0;
         })
+        before(notifications, "hasRelevantUnread", ctx => {
+            const [channel] = ctx.args
+            if (isHidden(channel))
+                ctx.result = false;
+        })
 
         const navigator = getByProps("selectChannel")
         before(navigator, "selectChannel", ctx => {
@@ -70,24 +75,20 @@ export default class HiddenChannels extends Plugin {
                 'alignItems': 'center',
                 'justifyContent': 'center',
                 'backgroundColor': Constants.ThemeColorMap.BACKGROUND_PRIMARY,
-             },
+            },
             'title': {
                 'fontFamily': Constants.Fonts.PRIMARY_SEMIBOLD,
-                'fontSize': 17,
+                'fontSize': 24,
                 'backgroundColor':Constants.ThemeColorMap.BACKGROUND_PRIMARY,
                 'textAlign': 'left',
                 'color': Constants.ThemeColorMap.HEADER_PRIMARY,
-                'padding': 20,
-                'flex': 1
+                'paddingVertical': 25
             },
             'text': {
-                'fontFamily': Constants.ThemeColorMap.HEADER_SECONDARY,
-                'fontSize': 14,
+                'fontSize': 16,
                 'backgroundColor':Constants.ThemeColorMap.BACKGROUND_PRIMARY,
-                'textAlign': 'center',
-                'color': "#ffffff",
-                'padding': 20,
-                'flex': 1
+                'textAlign': 'justify',
+                'color': Constants.ThemeColorMap.HEADER_PRIMARY,
             }
         })
         after(MessagesConnected, "default", (ctx, res) => {
@@ -95,12 +96,14 @@ export default class HiddenChannels extends Plugin {
             if (!isHidden(channel)) return;
 
             ctx.result = <View style={MessageStyles.container}>
-                <Text style={MessageStyles.title}>Hidden Channel</Text>
-                <Text>{"\n\n" + channel.topic}</Text>
-                <Text>{"\n\nLast Message: "}</Text>
-                <Text>{channel.lastMessageId ? new Date(SnowflakeUtils.extractTimestamp(channel.lastMessageId)).toLocaleString() : "-"}</Text>
-                <Text>{"\n\nLast Pin: "}</Text>
-                <Text>{channel.lastPinTimestamp ? (new Date(channel.lastPinTimestamp)).toLocaleString() : "-"}</Text>
+                <Text style={MessageStyles.title}>This channel is hidden.</Text>
+                <Text style={MessageStyles.text}>
+                    Topic: {channel.topic || "No topic."}
+                    {"\n\n"}
+                    Last message: {channel.lastMessageId ? new Date(SnowflakeUtils.extractTimestamp(channel.lastMessageId)).toLocaleString() : "No messages."}
+                    {"\n\n"}
+                    Last pin: {channel.lastPinTimestamp ? (new Date(channel.lastPinTimestamp)).toLocaleString() : "No pins."}
+                </Text>
             </View>
         })
     }
