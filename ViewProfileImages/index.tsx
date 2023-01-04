@@ -7,14 +7,17 @@ export default class ViewProfileImages extends Plugin {
     public async start() {
         const HeaderAvatar = getByName("HeaderAvatar");
         after(HeaderAvatar, "default", (ctx, component) => {
-            const [{user}] = ctx.args;
+            const [{user, style}] = ctx.args;
             const image = user?.getAvatarURL?.(false, 4096, true);
             if (!image) return;
+
+            component.props.style = {}
+            user.avatarDecoration = null
 
             const discrim = user.discriminator % 5;
             const url = typeof image === 'number' ? `https://cdn.discordapp.com/embed/avatars/${discrim}.png` : image?.replace('.webp', '.png');
 
-            ctx.result = <Pressable onPress={() => URLOpener.openURL(url)}>
+            ctx.result = <Pressable style={style} onPress={() => URLOpener.openURL(url)}>
                 {component}
             </Pressable>
         })
