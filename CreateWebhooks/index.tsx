@@ -20,7 +20,7 @@ export default class CreateWebhooks extends Plugin {
                     renderItem={({item}) => {
                         // @ts-ignore
                         if (item == '0') return component;
-                        else return <Button text={Locale.Messages.WEBHOOK_CREATE} onPress={() => {
+                        else return <Button color="brand" style={{margin: 16}} text={Locale.Messages.WEBHOOK_CREATE} onPress={() => {
                             createWebhook(guild.id, channel.id)
                         }}/>
                     }}
