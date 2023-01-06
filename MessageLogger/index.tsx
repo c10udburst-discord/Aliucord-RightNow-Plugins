@@ -39,6 +39,9 @@ export default class MessageLogger extends Plugin {
                 if (skipLog(msg)) return;
 
                 const newContent = args.message.content;
+
+                if (newContent == msg.content) return; // nothing changed
+
                 ctx.args[0].message.content = msg.content + " `[edited]`\n" + newContent;
             }
         });
