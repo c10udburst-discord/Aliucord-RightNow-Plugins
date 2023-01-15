@@ -4,8 +4,8 @@ import { ALIUCORD_DIRECTORY } from "aliucord/utils/constants";
 
 export default class VendettaCompat extends Plugin {
     public async start() {
-        const downloadUrl = "https://raw.githubusercontent.com/enmity-mod/enmity/main/dist/Enmity.js";
-        const filePath = ALIUCORD_DIRECTORY + "/Enmity.js"
+        const downloadUrl = "https://raw.githubusercontent.com/vendetta-mod/builds/master/vendetta.js";
+        const filePath = ALIUCORD_DIRECTORY + "/vendetta.js"
         
         const run = () => eval(readFile(filePath));
 
