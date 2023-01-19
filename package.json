@@ -5,6 +5,7 @@
   "author": "Aliucord",
   "scripts": {
     "build": "node build.mjs",
+    "buildAll": "node buildAll.mjs",
     "watch": "node build.mjs --watch"
   },
   "devDependencies": {
