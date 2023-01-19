@@ -1,4 +1,4 @@
 {
     "version": "1.0.0",
-    "description": "Injects emnity into aliucordrn"
+    "description": "Injects emnity into aliucordrn, but plugins and themes don't work, since they are handled on the native side."
 }
