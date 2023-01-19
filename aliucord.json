@@ -1,0 +1,5 @@
+{
+    "buildCommand": "pnpm i --frozen-lockfile && pnpm buildAll",
+    "distFolder": "./dist",
+    "ignoredPlugins": ["EmnityCompat"]
+}
