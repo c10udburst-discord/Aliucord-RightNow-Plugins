@@ -12,13 +12,9 @@ readdir(cwd(), { withFileTypes: true }, (err, folders) => {
         const manifestPath = join(folderName, "manifest.json")
         if(existsSync(manifestPath))
         {
-            const path = join(folderName, "index.ts")
             let path = null
-            if (existsSync(join(folderName, "index.ts"))) {
-                path = join(folderName, "index.ts")
-            } else if (existsSync(join(folderName, "index.tsx"))) {
-                path = join(folderName, "index.tsx")
-            }
+            if (existsSync(join(folderName, "index.ts"))) path = join(folderName, "index.ts")
+            else if (existsSync(join(folderName, "index.tsx"))) path = join(folderName, "index.tsx")
             if(!existsSync(path))
             {
                 console.log(`Skipping ${folderName}`)
