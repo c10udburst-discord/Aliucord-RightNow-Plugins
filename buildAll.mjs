@@ -20,11 +20,12 @@ readdir(cwd(), { withFileTypes: true }, (err, folders) => {
                 console.log(`Skipping ${folderName}`)
                 return;
             }
-            const proc = spawnSync((platform === "win32") ? ".\\node_modules\\.bin\\rollup.cmd" : "node_modules/.bin/rollup", ["-c", "--configPlugin", "typescript", false].filter(Boolean), {
+            const proc = spawnSync((platform === "win32") ? ".\\node_modules\\.bin\\rollup.cmd" : "node_modules/.bin/rollup", ["-c", "--configPlugin", "typescript"].filter(Boolean), {
                 stdio: "inherit",
                 cwd: cwd(),
                 env: {
-                    plugin: folderName
+                    plugin: folderName,
+                    pluginPath: path
                 }
             });
             
