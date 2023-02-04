@@ -14,4 +14,8 @@ export default class VendettaCompat extends Plugin {
         else
             run();
     }
+    
+    public stop() {
+        window.vendetta?.unload();
+    }
 }
